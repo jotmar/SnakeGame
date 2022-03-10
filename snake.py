@@ -13,24 +13,35 @@ def gen_apple():
     return (apple, apple_pos)
 
 
+def show_score(score):
+    game_score = game_score_font.render(f'Score: {score}', True, 'White')
+    game_score_rect = game_score.get_rect(midtop = (400, 20))
+    screen.blit(game_score, game_score_rect)
+
 WIDTH = 800
 HEIGTH = 600
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGTH))
 pygame.display.set_caption('Snake Game')
-snake = [[100, 50], [90, 50], [80, 50]]
-direction = 'RIGTH'
+game_name_font = pygame.font.SysFont('Arial', 60)
+game_press_font = pygame.font.SysFont('Aria', 30)
+game_score_font = pygame.font.SysFont('Arial', 20)
+score = 0
 clock = pygame.time.Clock()
 
 background = pygame.Surface((WIDTH, HEIGTH))
 background.fill('black')
 
+#Snake Var
+snake = [[100, 50], [90, 50], [80, 50]]
+direction = 'RIGTH'
 
-game_font = pygame.font.SysFont('Arial', 40)
-game_name = game_font.render('Snake game', False, 'Red').convert_alpha()
+#Game Text
+game_name = game_name_font.render('Snake game', True, 'Cyan')
 game_name_rect = game_name.get_rect(center = (400, 300))
-game_press = ''
+game_press = game_press_font.render('Press Space to Start', True, 'Cyan')
+game_press_rect = game_press.get_rect(midbottom = (400, 500))
 
 
 apple = gen_apple()
@@ -74,10 +85,12 @@ while True:
 
 
         screen.blit(apple[0], apple[1])
+        show_score(score)
 
         if snake[0][0] == apple[1][0] and snake[0][1] == apple[1][1]:
             apple = gen_apple()
             snake.append([-10,-10])
+            score += 1
 
        
         if direction == 'RIGTH':
@@ -90,7 +103,9 @@ while True:
             snake[0][1] -= 10
 
     else:
+        score = 0
         screen.blit(game_name, game_name_rect)
+        screen.blit(game_press, game_press_rect)
         snake = [[100, 50], [90, 50], [80, 50]]
         apple = gen_apple()
         direction = 'RIGTH'
