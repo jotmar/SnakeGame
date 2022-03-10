@@ -62,6 +62,11 @@ while True:
                 if snake[0] == snake[i]:
                     game_state = 0
         
+        if snake[0][0] > 800 or snake[0][0] < 0:
+            game_state = 0
+        if snake[0][1] > 600 or snake[0][1] < 0:
+            game_state = 0
+
         
         for i in range(len(snake)-1, 0, -1):
             pygame.draw.rect(screen, 'green', (snake[i][0], snake[i][1], 10, 10))
@@ -72,17 +77,7 @@ while True:
 
         if snake[0][0] == apple[1][0] and snake[0][1] == apple[1][1]:
             apple = gen_apple()
-            snake.append([0,0])
-            snake.append([0,0])
-            snake.append([0,0])
-            snake.append([0,0])
-            snake.append([0,0])
-    
-
-        if snake[0][0] > 800 or snake[0][0] < 0:
-            game_state = 0
-        if snake[0][1] > 600 or snake[0][1] < 0:
-            game_state = 0
+            snake.append([-10,-10])
 
        
         if direction == 'RIGTH':
